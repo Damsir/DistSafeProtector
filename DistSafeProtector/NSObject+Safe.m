@@ -20,9 +20,11 @@ static  DistSafeProtectorBlock distSafeProtectorBlock;
 @property (nonatomic,weak) id safe_object;
 
 @end
+
 @implementation DistSafeProxy
 
-- (void)safe_crashLog{
+- (void)safe_crashLog {
+//    NSLog(@"进入方法：safe_crashLog");
 }
 
 @end
@@ -60,7 +62,7 @@ static  DistSafeProtectorBlock distSafeProtectorBlock;
             [NSNotificationCenter openSafeProtector];
             [NSTimer openSafeProtector];
             if (isDebug) {
-                 dist_safe_logType = DistSafeProtectorLogTypeAll;
+                dist_safe_logType = DistSafeProtectorLogTypeAll;
             } else {
                 dist_safe_logType = DistSafeProtectorLogTypeNone;
             }
@@ -156,8 +158,8 @@ static  DistSafeProtectorBlock distSafeProtectorBlock;
 
     NSString *fullMessage = [NSString stringWithFormat:@"\n------------------------------------  Crash START -------------------------------------\n%@\n%@\n%@\n函数堆栈:\n%@\n------------------------------------   Crash END  -----------------------------------------", crashName, crashReason, crashLocation, exception.callStackSymbols];
     
-    NSMutableDictionary *userInfo=[NSMutableDictionary dictionary];
-    userInfo[@"callStackSymbols"]=[NSString stringWithFormat:@"%@",exception.callStackSymbols];
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    userInfo[@"callStackSymbols"] = [NSString stringWithFormat:@"%@",exception.callStackSymbols];
     userInfo[@"location"] = mainMessage;
     NSException *newException = [NSException exceptionWithName:exception.name reason:exception.reason userInfo:userInfo];
     if (distSafeProtectorBlock) {
@@ -166,8 +168,7 @@ static  DistSafeProtectorBlock distSafeProtectorBlock;
     DistSafeProtectorLogType logType = dist_safe_logType;
     if (logType == DistSafeProtectorLogTypeNone) {
     
-    }
-    else if (logType == DistSafeProtectorLogTypeAll) {
+    } else if (logType == DistSafeProtectorLogTypeAll) {
         DistSafeLog(@"%@", fullMessage);
         NSAssert(NO, @"检测到崩溃，详情请查看上面信息");
     }
@@ -176,12 +177,12 @@ static  DistSafeProtectorBlock distSafeProtectorBlock;
 #pragma mark - 获取堆栈主要崩溃精简化的信息<根据正则表达式匹配出来
 
 + (NSString *)safe_getMainCallStackSymbolMessageWithCallStackSymbolArray:(NSArray *)callStackSymbolArray index:(NSInteger)index first:(BOOL)first {
-    NSString *  callStackSymbolString;
-    if (callStackSymbolArray.count<=0) {
+    NSString *callStackSymbolString;
+    if (callStackSymbolArray.count <= 0) {
         return nil;
     }
     if (index<callStackSymbolArray.count) {
-        callStackSymbolString=callStackSymbolArray[index];
+        callStackSymbolString = callStackSymbolArray[index];
     }
     // 正则表达式
     // http://www.jianshu.com/p/b25b05ef170d
@@ -201,15 +202,15 @@ static  DistSafeProtectorBlock distSafeProtectorBlock;
         }
     }];
     
-    if (index==0) {
+    if (index == 0) {
         return mainCallStackSymbolMsg;
     }
-    if (mainCallStackSymbolMsg==nil) {
-        NSInteger newIndex=0;
+    if (mainCallStackSymbolMsg == nil) {
+        NSInteger newIndex = 0;
         if (first) {
-            newIndex=callStackSymbolArray.count-1;
+            newIndex = callStackSymbolArray.count-1;
         }else{
-            newIndex=index-1;
+            newIndex = index-1;
         }
         mainCallStackSymbolMsg = [self safe_getMainCallStackSymbolMessageWithCallStackSymbolArray:callStackSymbolArray index:newIndex first:NO];
     }

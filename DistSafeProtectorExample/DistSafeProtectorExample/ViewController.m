@@ -48,7 +48,6 @@
 - (void)startSafe:(BOOL)isDebug {
     self.testButton.enabled = NO;
     self.productionButton.enabled = NO;
-    
     // IsDebug=YES代表开发环境  捕捉到崩溃 ，会打印崩溃信息，同时利用断言闪退，会回调block
     // IsDebug=NO，代表生产环境，拦截到崩溃不打印崩溃信息，也不会断言闪退，会回调block
     [DistSafeProtector openSafeProtectorWithDebug:isDebug block:^(NSException *exception, DistSafeProtectorCrashType crashType) {
@@ -162,6 +161,7 @@
     strings[1]=value;
     strings[2]=@"222";
     [NSArray arrayWithObjects:strings count:3];
+    
     //        [[NSArray alloc]initWithObjects:strings count:3];
     
     //        NSArray *a1=[NSArray array];
@@ -173,6 +173,14 @@
     //
     //        NSArray *a3=@[@"fs",@"fsd"];
     //        a3[10];
+    
+    //range
+//    NSArray *array = @[@"1", @"2", @"3"];//__NSArrayI
+//    //NSArray *array = @[@"1"];//__NSSingleObjectArrayI
+//    //NSArray *array = @[];//NSArray
+//    NSRange range = NSMakeRange(0, 11);
+//    __unsafe_unretained id cArray[range.length];
+//    [array getObjects:cArray range:range];
 }
 
 - (IBAction)testMutableArray {

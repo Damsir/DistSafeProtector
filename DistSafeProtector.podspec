@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
 
   s.name         = "DistSafeProtector"
-  s.version      = "1.0.0"
-  s.summary      = "打开，预览 -> 本地，网络文件"
+  s.version      = "1.0.1"
+  s.summary      = "防止crash框架，支持KVO自释放等12种类型"
   s.author       = { "Damrin" => "75081647@qq.com" }
   s.homepage    = 'https://github.com/Damsir/DistSafeProtector'
   s.source      = { :git => 'https://github.com/Damsir/DistSafeProtector.git', :tag => s.version }
